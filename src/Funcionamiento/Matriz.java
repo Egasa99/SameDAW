@@ -35,4 +35,39 @@ public class Matriz {
     public void ponerBolas(int x, int y, char colorBola) {
         matrizTablero[x][y]=colorBola;
     }
-}
+    
+    public void seleccionarBolas(int x, int y){
+        char colorBolaInicial = matrizTablero[x][y];
+        int x2 = x;
+        int y2 = y;
+        for (int i=0; i<=1; i++){
+            x--;
+            try {
+                if (matrizTablero[x][y]==colorBolaInicial){
+                System.out.println("La posición " + x + " en X, " + y + " en Y tiene el mismo color");
+                } else {
+                System.out.println("La posición " + x + " en X, " + y + " en Y tiene un color diferente");
+                }
+            } catch(Exception e) {
+            System.out.println("ERROR desconocido");
+            }
+        x+=3;
+        }
+        x=x2;
+            
+        for (int i=0; i<=1; i++){
+            y--;
+            try {
+                if (matrizTablero[x][y]==colorBolaInicial){
+                System.out.println("La posición " + x + " en X, " + y + " en Y tiene el mismo color");
+                } else {
+                System.out.println("La posición " + x + " en X, " + y + " en Y tiene un color diferente");
+            }
+            } catch(Exception e) {
+            System.out.println("ERROR desconocido");
+            }
+        y+=3;
+        }
+        y=y2;
+        }
+    }

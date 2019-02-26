@@ -18,13 +18,17 @@ public class NewMain {
         Matriz tablero = new Matriz();
         System.out.println("Primer resultado");
         tablero.mostrarMatriz();
-        tablero.ponerBolas(2, 4, 'a');
-        tablero.ponerBolas(2, 5, 'r');
-        tablero.ponerBolas(1, 7, 'x');
-        tablero.ponerBolas(7, 9, 'w');
-        tablero.ponerBolas(2, 1, 'a');
+        tablero.ponerBolas(0, 1, 'c');
+        tablero.ponerBolas(1, 1, 'c');
+        tablero.ponerBolas(1, 2, 'c');
+        tablero.ponerBolas(1, 0, 'b');
+        tablero.ponerBolas(2, 1, 'c');
+        tablero.ponerBolas(2, 3, 'a');
         System.out.println("");
         System.out.println("Segundo resultado");
         tablero.mostrarMatriz();
+        System.out.println("");
+        System.out.println("Tercer resultado");
+        tablero.seleccionarBolas(0, 1);
     }
 }
