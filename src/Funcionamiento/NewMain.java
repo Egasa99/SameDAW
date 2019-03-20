@@ -16,19 +16,25 @@ public class NewMain {
      */
     public static void main(String[] args) {
         Matriz tablero = new Matriz();
-        System.out.println("Primer resultado");
-        tablero.mostrarMatriz();
         tablero.ponerBolas(0, 1, 'c');
         tablero.ponerBolas(1, 1, 'c');
         tablero.ponerBolas(1, 2, 'c');
         tablero.ponerBolas(1, 0, 'b');
         tablero.ponerBolas(2, 1, 'c');
+        tablero.ponerBolas(3, 1, 'c');
+        tablero.ponerBolas(4, 1, 'c');
+        tablero.ponerBolas(5, 1, 'c');
+        tablero.ponerBolas(6, 1, 'c');
         tablero.ponerBolas(2, 3, 'a');
-        System.out.println("");
-        System.out.println("Segundo resultado");
+        System.out.println("Primer resultado");
         tablero.mostrarMatriz();
-        System.out.println("");
-        System.out.println("Tercer resultado");
-        tablero.seleccionarBolas(0, 1);
+        System.out.println();
+        System.out.println("Segundo resultado");
+        tablero.eliminarBolas(1, 1);
+        tablero.mostrarMatriz();
+        tablero.reajustarBolas();
+        System.out.println();
+        System.out.println("Ultimo resultado");
+        tablero.mostrarMatriz();
     }
 }
