@@ -5,8 +5,10 @@
  */
 package Pantalla;
 
+import Funcionamiento.Matriz;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -18,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -55,11 +58,25 @@ public class SameDAW extends Application {
     HBox Hbox1;
     Line line;
     Line line2;
+    private Matriz matriz;
     String localUrl;
     ImageView imageView;
     int valor = 0;
     
-
+    public Matriz getTablero(){
+        return matriz;
+    }
+    
+    public void mostrarMatriz(){
+        for (int y=0; y<=casillaX; y++){
+            for (int x=0; x<=casillaY; x++){
+                Circle circulo1 = new Circle(tamanoCasilla);
+                circulo1.setFill(Color.rgb(255,0,0,1.0));
+                circulo1.setLayoutX(x*tamanoCasilla/2);
+                circulo1.setLayoutY(y*tamanoCasilla/2);
+            }
+        }
+    }
     public void start(Stage primaryStage) {
         
         Pane root = new Pane();
@@ -75,7 +92,16 @@ public class SameDAW extends Application {
             public void handle(ActionEvent event) {
                 
                 System.out.println("handle menuItem1");
-                root.getChildren().clear();
+                
+                for (int i = 0; i < finalCasillaX; i+= tamanoCasilla) {
+                    root.getChildren().remove(line2);
+                }
+                
+                for (int i = 0; i < finalCasillaY; i+= tamanoCasilla) {
+                    root.getChildren().remove(line2);
+                }
+                
+                //Ventana extra emergente
                 Pane root2 = new Pane();
                 Scene secondScene = new Scene(root2, 256, 512);
                 Stage newWindow = new Stage();
@@ -117,7 +143,7 @@ public class SameDAW extends Application {
                 
                 HBox Hbox1= new HBox(labelSizeC1,textField,labelSizeX,labelSizeC2,textField2);
                 Hbox1.setVisible(false);
-
+                //tamaño por defecto
                 System.out.println("Pequeño");
                 casillaX = 3;
                 casillaY = 4;
@@ -129,7 +155,7 @@ public class SameDAW extends Application {
                 choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
                     @Override
                     
-                    
+                    //valores seleccionados esperando a ser ejecutados cuando se pulse Empezar
                     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                         switch((int) newValue){ 
                             case 0:
@@ -179,10 +205,12 @@ public class SameDAW extends Application {
                         }
                     }
                 });
-                
-                Button button4 = new Button();
-                button4.setText("Seleccionar fondo");
-                button4.setOnAction(new EventHandler<ActionEvent>() {
+                // crear fondo
+                Separator separatorWallpaper = new Separator();
+                Label labelWallpaper = new Label("Seleccionar fondo");
+                Button buttonWallpaper = new Button();
+                buttonWallpaper.setText("Seleccionar fondo");
+                buttonWallpaper.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         FileChooser fileChooser = new FileChooser();
@@ -207,14 +235,19 @@ public class SameDAW extends Application {
                         
                     }
                 });
-                Button button2 = new Button();
-                button2.setText("Empezar");
-                button2.setOnAction(new EventHandler<ActionEvent>() {
                 
-                    
+                //Activar/desactivar líneas
+                Separator separator2 = new Separator();
+                Label labelLines = new Label("Lineas");
+                CheckBox cbl = new CheckBox("Activar Lineas");
+                cbl.setSelected(true);
+                
+                Button buttonEmpezar = new Button();
+                buttonEmpezar.setText("Empezar");
+                // Boton empezar. Literalmente todo occure aquí
+                buttonEmpezar.setOnAction(new EventHandler<ActionEvent>() {
+                //Se aplica los valores de personalizado
                     public void handle(ActionEvent event) {
-                        
-                        
                         switch((int) valor){
                             case 1:
                                 if (textField.getText().trim().isEmpty()) {
@@ -246,53 +279,56 @@ public class SameDAW extends Application {
                         }
                         //
                         if (localUrl !=null){
-                        Image image = new Image(localUrl);
-                        imageView = new ImageView(image);
-                        imageView.setFitHeight(finalCasillaY);
-                        imageView.setFitWidth(finalCasillaX);
+                            Image image = new Image(localUrl);
+                            imageView = new ImageView(image);
+                            imageView.setFitHeight(finalCasillaY);
+                            imageView.setFitWidth(finalCasillaX);
                         }
+
                         if (imageView != null){
                             root.getChildren().add(imageView);
-                            //line.setStroke(Color.rgb(0, 0, 0,1));
-                            //line2.setStroke(Color.rgb(0, 0, 0,1));
                             System.out.println("imagen :D");
                         }
+                        
                         //
                         dimensionX=finalCasillaX+3;
                         dimensionY=finalCasillaY+70;
-                        for (int i = 0; i < finalCasillaX; i+= tamanoCasilla) {
-                            line = new Line();
-                            line.setStartX(i);
-                            line.setEndX(i);
-                            line.setStartY(0);
-                            line.setEndY(finalCasillaY);
-                            line.setStroke(Color.WHITE);
-                            root.getChildren().add(line);
-                        }
-                    // horizontal
-                        for (int i = 0; i < finalCasillaY; i+= tamanoCasilla) {
-                            line2 = new Line();
-                            line2.setStartX(0);
-                            line2.setEndX(finalCasillaX);
-                            line2.setStartY(i);
-                            line2.setEndY(i);
-                            line2.setStroke(Color.WHITE);
-                            root.getChildren().add(line2);
-
+                        
+                        if (cbl.isSelected()){
+                            ArrayList<Line> listaLinea = new ArrayList();
+                            for (int i = 0; i < finalCasillaX; i+= tamanoCasilla) {
+                                line = new Line();
+                                line.setStartX(i);
+                                line.setEndX(i);
+                                line.setStartY(0);
+                                line.setEndY(finalCasillaY);
+                                line.setStroke(Color.WHITE);            
+                                listaLinea.add(line);
+                                root.getChildren().add(line);
+                            }
+                            for (int i = 0; i < finalCasillaY; i+= tamanoCasilla) {
+                                line2 = new Line();
+                                line2.setStartX(0);
+                                line2.setEndX(finalCasillaX);
+                                line2.setStartY(i);
+                                line2.setEndY(i);
+                                line2.setStroke(Color.WHITE);
+                                listaLinea.add(line2);
+                                root.getChildren().add(line2);
+                            }
                         }
                         primaryStage.setWidth(dimensionX);
                         primaryStage.setHeight(dimensionY);
-                        newWindow.close();
+                        // Asignacion y aplicacion de tablero
+                        getTablero();
+                        mostrarMatriz();
                         
+                        newWindow.close();   
                     }
-                    
                 });
-                
-                Separator separator1 = new Separator();
-                Label labelFondo = new Label("Seleccionar fondo");
-                
+                //Elementos metidos en Cajas
                 root2.getChildren().add(Hbox1);
-                VBox vbox= new VBox(label2,choiceBox,Hbox1,separator1,labelFondo,button4,button2);
+                VBox vbox= new VBox(label2,choiceBox,Hbox1,separatorWallpaper,labelWallpaper,buttonWallpaper,separator2,labelLines,cbl,buttonEmpezar);
                 
                 root2.getChildren().add(vbox);
                 
@@ -342,7 +378,6 @@ public class SameDAW extends Application {
         primaryStage.show();
     }
     
-
     /**
      * @param args the command line arguments
      */
