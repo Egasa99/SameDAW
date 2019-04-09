@@ -16,25 +16,41 @@ public class NewMain {
      */
     public static void main(String[] args) {
         Matriz tablero = new Matriz();
-        tablero.ponerBolas(0, 1, 'c');
-        tablero.ponerBolas(1, 1, 'c');
-        tablero.ponerBolas(1, 2, 'c');
-        tablero.ponerBolas(1, 0, 'b');
-        tablero.ponerBolas(2, 1, 'c');
-        tablero.ponerBolas(3, 1, 'c');
-        tablero.ponerBolas(4, 1, 'c');
-        tablero.ponerBolas(5, 1, 'c');
-        tablero.ponerBolas(6, 1, 'c');
-        tablero.ponerBolas(2, 3, 'a');
+        tablero.PonerBolasInicio();
+        tablero.ponerBolas(3, 0, 'a');
+        tablero.ponerBolas(3, 1, 'a');
+        tablero.ponerBolas(3, 2, 'a');
+        tablero.ponerBolas(3, 3, 'a');
+        tablero.ponerBolas(3, 4, 'a');
+        tablero.ponerBolas(3, 5, 'a');
+        tablero.ponerBolas(3, 6, 'a');
+        tablero.ponerBolas(3, 7, 'a');
+        tablero.ponerBolas(3, 8, 'a');
+        tablero.ponerBolas(3, 9, 'a');
+        tablero.ponerBolas(5, 0, 'a');
+        tablero.ponerBolas(5, 1, 'a');
+        tablero.ponerBolas(5, 2, 'a');
+        tablero.ponerBolas(5, 3, 'a');
+        tablero.ponerBolas(5, 4, 'a');
+        tablero.ponerBolas(5, 5, 'a');
+        tablero.ponerBolas(5, 6, 'a');
+        tablero.ponerBolas(5, 7, 'a');
+        tablero.ponerBolas(5, 8, 'a');
+        tablero.ponerBolas(5, 9, 'a');
+        tablero.tocarBolas(3, 3);
         System.out.println("Primer resultado");
         tablero.mostrarMatriz();
         System.out.println();
+        tablero.Combinaciones();
+        tablero.tocarBolas(3, 3);
         System.out.println("Segundo resultado");
-        tablero.eliminarBolas(1, 1);
         tablero.mostrarMatriz();
-        tablero.reajustarBolas();
         System.out.println();
+        tablero.reajustarBolas();
+        tablero.Combinaciones();
         System.out.println("Ultimo resultado");
         tablero.mostrarMatriz();
+        tablero.mostrarPuntuacion();
+        tablero.Combinaciones();
     }
 }
