@@ -9,6 +9,7 @@ import Funcionamiento.Matriz;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -30,6 +31,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -49,6 +52,7 @@ public class SameDAW extends Application {
     int dato = 6;
     public int casillaX = 0;
     public int casillaY = 0;
+    //C
     int multiplicador = (int) Math.pow((dato-1),2);
     double finalCasillaX = tamanoCasilla*casillaX;
     double finalCasillaY = tamanoCasilla*casillaY;
@@ -67,6 +71,12 @@ public class SameDAW extends Application {
         return matriz;
     }
     
+        public void bolasAleatorias(int x, int y){
+        Random random = new Random();
+        char color = (char)('a' + random.nextInt(5));
+        matriz.matrizTablero[x][y]=color;
+        
+    }
     public void creaRed(){
         ArrayList<Line> listaLinea = new ArrayList();
         for (int i = 0; i < finalCasillaX; i+= tamanoCasilla) {
@@ -94,76 +104,151 @@ public class SameDAW extends Application {
     public void mostrarCasillas(){
         for (int y=0; y<=casillaX-1; y++){
             for (int x=0; x<=casillaY-1; x++){
-               mostrarFichas(x,y);
+                bolasAleatorias(x,y);
+                mostrarFichas(x,y);
             }
         }
     }
+    
+            public void posicionCirculos(int xSeleccionada, int ySeleccionada){
+            mostrarFichas(xSeleccionada,ySeleccionada);
+        }
+            //Detecta coordenada pulsada
+            public void raton(){
+                root.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        int x = (int)mouseEvent.getX()/(int)tamanoCasilla;
+                        int y = (int)mouseEvent.getY()/(int)tamanoCasilla;
+                        System.out.println("X: "+ (x+1 )+"Y: "+(y+1));
+                        posicionCirculos(x,y);
+                    }
+                });
+                
+            }
     public void mostrarFichas(int x,int y){
         switch(matriz.matrizTablero[x][y]){
-            case '0':
+            case '*':
                 Circle circulo0 = new Circle(tamanoCasilla/2);
-                circulo0.setFill(Color.rgb(255,0,0,1.0));
+                circulo0.setFill(Color.rgb(255,255,255,1.0));
                 // color rojo opaco
                 circulo0.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
                 circulo0.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
                 root.getChildren().add(circulo0);
                 break;
             case 'a':
-                Circle circulo = new Circle(tamanoCasilla/2);
-                circulo.setFill(Color.rgb(255,0,0,1.0));
+                Circle circuloa= new Circle(tamanoCasilla/2);
+                circuloa.setFill(Color.rgb(255,0,0,1.0));
                 // color rojo opaco
-                circulo.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo);
+                circuloa.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloa.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloa);
                 break;
+                
+            case 'A':
+                Circle circuloA = new Circle(tamanoCasilla/2);
+                circuloA.setFill(Color.rgb(255,0,0,0.5));
+                // color rojo opaco
+                circuloA.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloA.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloA);
+                break;    
             case 'b':
-                Circle circulo2 = new Circle(tamanoCasilla/2);
-                circulo2.setFill(Color.rgb(0,0,255,1.0));
+                Circle circulob = new Circle(tamanoCasilla/2);
+                circulob.setFill(Color.rgb(0,0,255,1.0));
                 // color azul opaco
-                circulo2.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo2.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo2);
+                circulob.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circulob.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circulob);
                 break;
+                
+            case 'B':
+                Circle circuloB = new Circle(tamanoCasilla/2);
+                circuloB.setFill(Color.rgb(0,0,255,0.5));
+                // color azul opaco
+                circuloB.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloB.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloB);
+                break;
+                
             case 'c':
-                Circle circulo3 = new Circle(tamanoCasilla/2);
-                circulo3.setFill(Color.rgb(0,255,0,1.0));
+                Circle circuloc = new Circle(tamanoCasilla/2);
+                circuloc.setFill(Color.rgb(0,255,0,1.0));
                 // color verde opaco
-                circulo3.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo3.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo3);
+                circuloc.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloc.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloc);
                 break;
+            
+            case 'C':
+                Circle circuloC = new Circle(tamanoCasilla/2);
+                circuloC.setFill(Color.rgb(0,255,0,0.5));
+                // color verde opaco
+                circuloC.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloC.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloC);
+                break;
+                
             case 'd':
-                Circle circulo4 = new Circle(tamanoCasilla/2);
-                circulo4.setFill(Color.rgb(186,186,186,1.0));
+                Circle circulod = new Circle(tamanoCasilla/2);
+                circulod.setFill(Color.rgb(186,186,186,1.0));
                 // color gris opaco
-                circulo4.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo4.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo4);
+                circulod.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circulod.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circulod);
                 break;
-                
+            
+            case 'D':
+                Circle circuloD = new Circle(tamanoCasilla/2);
+                circuloD.setFill(Color.rgb(186,186,186,0.5));
+                // color gris opaco
+                circuloD.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloD.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloD);
+                break;    
             case 'e':
-                Circle circulo5 = new Circle(tamanoCasilla/2);
-                circulo5.setFill(Color.rgb(255,255,0,1.0));
+                Circle circuloe = new Circle(tamanoCasilla/2);
+                circuloe.setFill(Color.rgb(255,255,0,1.0));
                 // color amarillo opaco
-                circulo5.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo5.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo5);
+                circuloe.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloe.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloe);
                 break;
-                
+            
+            case 'E':
+                Circle circuloE = new Circle(tamanoCasilla/2);
+                circuloE.setFill(Color.rgb(255,255,0,0.5));
+                // color amarillo opaco
+                circuloE.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloE.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloE);
+                break;    
             case 'f':
-                Circle circulo6 = new Circle(tamanoCasilla/2);
-                circulo6.setFill(Color.rgb(125,33,129,1.0));
+                Circle circulof = new Circle(tamanoCasilla/2);
+                circulof.setFill(Color.rgb(125,33,129,1.0));
                 // color purpura opaco
-                circulo6.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
-                circulo6.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
-                root.getChildren().add(circulo6);
+                circulof.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circulof.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circulof);
+                break;
+            
+            case 'F':
+                Circle circuloF = new Circle(tamanoCasilla/2);
+                circuloF.setFill(Color.rgb(125,33,129,0.5));
+                // color purpura opaco
+                circuloF.setLayoutX(x*tamanoCasilla+tamanoCasilla/2);
+                circuloF.setLayoutY(y*tamanoCasilla+tamanoCasilla/2);
+                root.getChildren().add(circuloF);
                 break;
         }
     }
 
+
+    
+    @Override
     public void start(Stage primaryStage) {
         
-        matriz = new Matriz();
+        
         root = new Pane();
         BorderPane border = new BorderPane();
         primaryStage.setResizable(false);
@@ -198,6 +283,7 @@ public class SameDAW extends Application {
                 TextField textField = new TextField ();
                 textField.lengthProperty();
                     textField.textProperty().addListener(new ChangeListener<String>() {
+                        @Override
                         public void changed(ObservableValue<? extends String> observable, String oldValue,String newValue) {
                             if (!newValue.matches("\\d*")) {
                                 textField.setText(newValue.replaceAll("[^\\d]", ""));
@@ -209,16 +295,14 @@ public class SameDAW extends Application {
                 
                 TextField textField2 = new TextField ();
                 textField2.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue,String newValue) {
                         if (!newValue.matches("\\d*")) {
                             textField2.setText(newValue.replaceAll("[^\\d]", ""));
                         }
                     }
                 });
-                
-                
-                
-                
+
                 HBox Hbox1= new HBox(labelSizeC1,textField,labelSizeX,labelSizeC2,textField2);
                 Hbox1.setVisible(false);
                 //tamaño por defecto
@@ -327,6 +411,7 @@ public class SameDAW extends Application {
                 // Boton empezar. Literalmente todo occure aquí
                 buttonEmpezar.setOnAction(new EventHandler<ActionEvent>() {
                 //Se aplica los valores de personalizado
+                    @Override
                     public void handle(ActionEvent event) {
                         switch((int) valor){
                             case 1:
@@ -380,10 +465,11 @@ public class SameDAW extends Application {
                         }
                         
                         // Asignacion y aplicacion de tablero
+                        matriz = new Matriz(casillaX,casillaY);
                         
                         getTablero();
                         mostrarCasillas();
-                        //
+                        raton();
                         primaryStage.setWidth(dimensionX);
                         primaryStage.setHeight(dimensionY);
                         
@@ -400,6 +486,7 @@ public class SameDAW extends Application {
         });
         MenuItem menuItem2 = new MenuItem("Salir");
         menuItem2.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
             public void handle(ActionEvent event){
                 primaryStage.close();
             }
